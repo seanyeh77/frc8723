@@ -1,0 +1,35 @@
+﻿@page "/About_frc"
+
+<PageTitle>關於FRC</PageTitle>
+<dev class="d-flex flex-column flex-column justify-center">
+    <img style="max-height: 500px;" src = "/images/FIRST_Vertical_RGB.jpg"/>
+</dev>
+<MudText Typo="Typo.h3" GutterBottom="true">關於FRC</MudText>
+<MudText Typo = "Typo.h5">
+    @article3
+</MudText>
+
+@code {
+    public string menu3 = Data.Chinese_language.menu3;
+    public string article3 = Data.Chinese_language.article3;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Data.page = "/About_frc";
+        artical();
+    }
+    public void artical()
+    {
+        if (Data.language == "english")
+        {
+            menu3 = Data.Chinese_language.menu3;
+            article3 = Data.Chinese_language.article3;
+
+        }
+        else
+        {
+            menu3 = Data.English_language.menu3;
+            article3 = Data.English_language.article3;
+        }
+    }
+}

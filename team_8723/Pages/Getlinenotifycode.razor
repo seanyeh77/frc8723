@@ -1,0 +1,16 @@
+﻿@inject NavigationManager MyNavigationManager
+<PageTitle>"取得linenotifycode"</PageTitle>
+<MudButton OnClick="getcode">"取得code"</MudButton>
+
+@code {
+    void getcode()
+    {
+        string URL = "https://notify-bot.line.me/oauth/authotize?";
+        URL += "response_type=code";
+        URL += "&client_id=SQcmRfDFU3K9lBQYsTkPim";
+        URL += "&redirect_url=https://team8723.azurewebsites.net/Scuess";
+        URL += "&scope=notify";
+        URL += "&state=abcde";
+        MyNavigationManager.NavigateTo(URL);
+    }
+}

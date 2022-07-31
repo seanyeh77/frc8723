@@ -1,0 +1,63 @@
+﻿@page "/"
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+<PageTitle>FRC TEAM 8723</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">FRC 8723</MudText>
+<MudText Class="mb-8">
+    @arcital1
+</MudText>
+@if (forecasts == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudCarousel Class="mud-width-full" Style="height:640px;" TData="object" AutoCycle="true">
+        @foreach (ImageBase item in forecasts)
+        {
+            <MudCarouselItem Transition="Transition.Slide">
+                <div Style="height: 100%" class="d-flex flex-column flex-column justify-center">
+                    <MudImage ObjectFit="ObjectFit.Cover" ObjectPosition="ObjectPosition.Center" Fluid = "true" Height="null" Width="null" Src=@($"images/{item.image}") Alt="Öxarárfoss, Iceland"  Elevation="25" Class="rounded-lg"/>
+                </div>
+@*                <div class="d-flex flex-column flex-column justify-center" style="height:100%">
+                    <img src=@($"images/{item.image}")/>
+                </div>*@
+            </MudCarouselItem>
+        }
+    </MudCarousel>
+}
+<br/>
+<MudText Class="mb-8">
+    @arcital2
+</MudText>
+<div class="d-flex flex-column flex-column justify-center" style="width: 100%; height: 100%;">
+    <style>.embed-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; } .embed-container iframe, .embed-container object, .embed-container embed { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }</style><div class='embed-container'><iframe width='560' height='315' src='https://www.youtube.com/embed/GGDmv_AhbcM' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></div>
+</div>
+
+@code{
+    private ImageBase[] forecasts;
+    public string arcital1 = Data.Chinese_language.article1;
+    public string arcital2 = Data.Chinese_language.article2;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<ImageBase[]>("sample-data/image.json");
+        Data.page = "";
+        artical();
+    }
+    public void artical()
+    {
+        if (Data.language == "english")
+        {
+            arcital1 = Data.Chinese_language.article1;
+            arcital2 = Data.Chinese_language.article2;
+
+        }
+        else
+        {
+            arcital1 = Data.English_language.article1;
+            arcital2 = Data.English_language.article2;
+        }
+    }
+}

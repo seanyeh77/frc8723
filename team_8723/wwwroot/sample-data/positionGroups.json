@@ -1,0 +1,27 @@
+﻿[
+  {
+    "group_name": "隊長",
+    "position": "隊長",
+    "icon": "Icons.Sharp.Person"
+  },
+  {
+    "group_name": "機械組",
+    "position": "機械",
+    "icon": "Icons.Filled.Settings"
+  },
+  {
+    "group_name": "加工組",
+    "position": "加工",
+    "icon": "Icons.Sharp.BuildCircle"
+  },
+  {
+    "group_name": "程式組",
+    "position": "程式",
+    "icon": "Icons.Filled.Code"
+  },
+  {
+    "group_name": "公關組",
+    "position": "公關",
+    "icon": "Icons.Sharp.PeopleAlt"
+  }
+]

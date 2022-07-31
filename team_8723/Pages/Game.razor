@@ -1,0 +1,73 @@
+﻿@page "/Game"
+<PageTitle>@menu7</PageTitle>
+<MudText Typo="Typo.h3" GutterBottom="true">@menu7</MudText>
+@if (gamedatas == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudTable Items="@gamedatas" Hover="true" SortLabel="Sort By" Filter="new Func<gamedata,bool>(FilterFunc1)" @bind-SelectedItem="selectedItem1">
+        <ToolBarContent>
+            <MudSpacer />
+            <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+        </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortBy="new Func<gamedata, object>(x=>x.Name)">競賽項目</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<gamedata, object>(x=>x.Team)">隊名</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<gamedata, object>(x=>x.Date)">日期</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<gamedata, object>(x=>x.Day)">天數</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortBy="new Func<gamedata, object>(x=>x.Ranking)">名次</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="競賽項目">@context.Name</MudTd>
+        <MudTd DataLabel="隊名">@context.Team</MudTd>
+        <MudTd DataLabel="日期">@context.Date</MudTd>
+        <MudTd DataLabel="天數">@context.Day</MudTd>
+        <MudTd DataLabel="名次">@context.Ranking</MudTd>
+    </RowTemplate>
+</MudTable>
+
+}
+
+@code {
+    private string searchString1 = "";
+    private gamedata selectedItem1 = null;
+    private IEnumerable<gamedata> gamedatas = new List<gamedata>();
+    public string menu7 = Data.Chinese_language.menu7;
+    private bool FilterFunc1(gamedata gamedata) => FilterFunc(gamedata, searchString1);
+    protected override async Task OnInitializedAsync()
+    {
+        gamedatas = await Http.GetFromJsonAsync<gamedata[]>("sample-data/race.json");
+        Data.page = "/Game";
+        artical();
+    }
+    private bool FilterFunc(gamedata gamedata, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString))
+            return true;
+        if (gamedata.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (gamedata.Team.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (gamedata.Date.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (gamedata.Ranking.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ($"{gamedata.Name} {gamedata.Team} {gamedata.Date} {gamedata.Ranking}".Contains(searchString))
+            return true;
+        return false;
+    }
+    public void artical()
+    {
+        if (Data.language == "english")
+        {
+            menu7 = Data.Chinese_language.menu7;
+
+        }
+        else
+        {
+            menu7 = Data.English_language.menu7;
+        }
+    }
+}

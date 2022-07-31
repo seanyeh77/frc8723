@@ -1,0 +1,58 @@
+﻿@page "/UserLog"
+
+<PageTitle>@menu10</PageTitle>
+@using System.Net.Http.Json
+@inject HttpClient httpClient
+
+<MudDataGrid T="Userlogdataprint" MultiSelection="true" Items="@userlogdataprint" SortMode="SortMode.Multiple" Filterable="true" QuickFilter="@_quickFilter"
+    Hideable="true">
+    <ToolBarContent>
+        <MudText Typo="Typo.h6">@menu10</MudText>
+        <MudSpacer />
+        <MudTextField @bind-Value="_searchString" Placeholder="Search" Adornment="Adornment.Start" Immediate="true"
+            AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+    </ToolBarContent>
+    <Columns>
+        <Column T="Userlogdataprint" Field="Name" Title="姓名"/>
+        <Column T="Userlogdataprint" Field="Time" Title="時間"/>
+    </Columns>
+    <PagerContent>
+        <MudDataGridPager T="Userlogdataprint" PageSizeOptions="new int[]{10, 20, 30,40,50}" />
+    </PagerContent>
+</MudDataGrid>
+@code {
+    public string menu10 = Data.Chinese_language.menu10;
+    private IEnumerable<Userlogdataprint> userlogdataprint = new List<Userlogdataprint>();
+    private string _searchString;
+    protected override async Task OnInitializedAsync()
+    {
+        Data.page = "/CheckTime";
+        artical();
+        userlogdataprint = await httpclientlogdata.Get();
+    }
+    public void artical()
+    {
+        if (Data.language == "english")
+        {
+            menu10 = Data.Chinese_language.menu10;
+
+        }
+        else
+        {
+            menu10 = Data.English_language.menu10;
+        }
+    }
+    private Func<Userlogdataprint, bool> _quickFilter => x =>
+    {
+        if (string.IsNullOrWhiteSpace(_searchString))
+            return true;
+
+        if (x.Name.Contains(_searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        if ($"{x.Name} {x.Time}".Contains(_searchString))
+            return true;
+
+        return false;
+    };
+}

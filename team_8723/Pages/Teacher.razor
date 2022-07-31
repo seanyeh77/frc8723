@@ -1,0 +1,64 @@
+﻿@page "/Teacher"
+
+<PageTitle>@menu5</PageTitle>
+
+<MudText Align="Align.Center" Typo="Typo.h3" GutterBottom="true">@menu5</MudText><br />
+@if (forecasts == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    foreach (TeacherData item in forecasts)
+        {
+        <MudGrid>
+            <MudItem xs="12" md="4">
+                <div>
+                    <img width=100% style="max-height: 500px;" src=@($"teacher_image/{item.image}")/>
+                </div>
+            </MudItem>
+             <MudItem xs="12" md="6">
+                <div style="max-width: 600px;">
+                    <MudText Typo="Typo.h4">@item.name</MudText><br/>
+                    @foreach (string str in item.introduction)
+                    {
+                        <MudText Typo="Typo.h6">@str</MudText>
+                    }
+                </div>
+            </MudItem>
+             <MudItem xs="12" md="2">
+                @if (item.fb != "")
+                {
+                    <MudIconButton Target="_blank" Link="@item.fb" Icon="@Icons.Custom.Brands.Facebook" Size="Size.Large" Color="Color.Info" aria-label="Facebook"></MudIconButton>
+                }
+                @if (item.instagram != "")
+                {
+                    <MudIconButton Target="_blank" Link = "@item.instagram" Icon="@Icons.Custom.Brands.Instagram" Size = "Size.Large" Color="Color.Secondary" aria-label="Instagram"></MudIconButton>
+                }
+            </MudItem>
+        </MudGrid>
+        }
+}
+@code {
+    private TeacherData[] forecasts;
+    public string menu5 = Data.Chinese_language.menu5;
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await Http.GetFromJsonAsync<TeacherData[]>("sample-data/teacher_image.json");
+        Data.page = "/Teacher";
+        artical();
+    }
+    public void artical()
+    {
+        if (Data.language == "english")
+        {
+            menu5 = Data.Chinese_language.menu5;
+
+        }
+        else
+        {
+            menu5 = Data.English_language.menu5;
+        }
+    }
+    
+}
