@@ -10,13 +10,13 @@ namespace ShareClassLibrary
     public class UserData
     {
         [Required]
-        public int ID { get; set; }
+        public string ID { get; set; }
 
         [Required]
-        public int grade { get; set; }
+        public int? grade { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string ChineseName { get; set; }
         [Required]
         public bool freeze { get; set; } = false;
     }

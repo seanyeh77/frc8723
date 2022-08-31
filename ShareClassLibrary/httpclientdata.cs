@@ -17,7 +17,7 @@ namespace ShareClassLibrary
     public class httpclientdata
     {
         //public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://localhost:7021/") };
-        public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://userdatawebapi20220502202651.azurewebsites.net/") };
+        public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://userdatawebapi20220829195800.azurewebsites.net/") };
         public static List<UserData> result = new List<UserData>();
         public static async Task<List<UserData>> Get()
         {

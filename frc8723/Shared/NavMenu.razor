@@ -21,7 +21,7 @@
             <MudButton OnClick="CheckTime">@menu9</MudButton>
             <MudButton OnClick="UserLog">@menu10</MudButton>
             <MudSpacer></MudSpacer>
-            <MudButton OnClick="changelanguage" Variant="Variant.Text">@($"{Data.language}")</MudButton>
+            <MudButton OnClick="changelanguage" Variant="Variant.Text">@($"{(Data.language=="english"?"繁體中文":"english")}")</MudButton>
         </div>
         <div class="d-flex d-sm-none" style="width: 100%;">
             <MudSpacer />
@@ -62,7 +62,7 @@
     private string menu8 = Data.Chinese_language.menu8;
     private string menu9 = Data.Chinese_language.menu9;
     private string menu10 = Data.Chinese_language.menu10;
-    private string imgages;
+    private string? imgages;
     protected override async Task OnInitializedAsync()
     {
         imgages = await httpclientfacebook.Geticon();
@@ -97,21 +97,7 @@
 
         if (Data.language == "english")
         {
-            Data.language = "中文";
-            menu1 = Data.English_language.menu1;
-            menu2 = Data.English_language.menu2;
-            menu3 = Data.English_language.menu3;
-            menu4 = Data.English_language.menu4;
-            menu5 = Data.English_language.menu5;
-            menu6 = Data.English_language.menu6;
-            menu7 = Data.English_language.menu7;
-            menu8 = Data.English_language.menu8;
-            menu9 = Data.English_language.menu9;
-            menu10 = Data.English_language.menu10;
-        }
-        else
-        {
-            Data.language = "english";
+            Data.language = "chinese";
             menu1 = Data.Chinese_language.menu1;
             menu2 = Data.Chinese_language.menu2;
             menu3 = Data.Chinese_language.menu3;
@@ -122,6 +108,20 @@
             menu8 = Data.Chinese_language.menu8;
             menu9 = Data.Chinese_language.menu9;
             menu10 = Data.Chinese_language.menu10;
+        }
+        else
+        {
+            Data.language = "english";
+            menu1 = Data.English_language.menu1;
+            menu2 = Data.English_language.menu2;
+            menu3 = Data.English_language.menu3;
+            menu4 = Data.English_language.menu4;
+            menu5 = Data.English_language.menu5;
+            menu6 = Data.English_language.menu6;
+            menu7 = Data.English_language.menu7;
+            menu8 = Data.English_language.menu8;
+            menu9 = Data.English_language.menu9;
+            menu10 = Data.English_language.menu10;
         }
         NavManager.NavigateTo("/Load");
         NavManager.NavigateTo(Data.page);

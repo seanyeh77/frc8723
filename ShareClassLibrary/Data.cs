@@ -8,7 +8,7 @@ namespace ShareClassLibrary
 {
     public static class Data
     {
-        public static string language = "中文";
+        public static string language = "english";//初始值(english,chinese)--請設定相反
         public static string page = "";
         public static class Chinese_language
         {

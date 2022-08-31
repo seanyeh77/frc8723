@@ -8,7 +8,7 @@ namespace ShareClassLibrary
 {
     public class Userlogdataprint
     {
-        public string Name { get; set; }
+        public string ChineseName { get; set; }
         public DateTime Time { get; set; }
     }
 }

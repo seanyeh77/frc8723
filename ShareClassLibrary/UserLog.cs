@@ -10,7 +10,7 @@ namespace ShareClassLibrary
     public class UserLog
     {
         [Required]
-        public string Name { get; set; }
+        public string ChineseName { get; set; }
 
         [Required]
         public DateTime time { get; set; }

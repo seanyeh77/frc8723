@@ -10,14 +10,12 @@ namespace ShareClassLibrary
     public class httpclientfacebook
     {
         //public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://localhost:7021/") };
-        public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://userdatawebapi20220502202651.azurewebsites.net/") };
+        public static HttpClient client = new HttpClient() { BaseAddress = new Uri("https://userdatawebapi20220829195800.azurewebsites.net/") };
         public static async Task<List<string>> Get()
         {
             try
             {
                 return await client.GetFromJsonAsync<List<string>>("Image");
-
-                //return result;
             }
             catch
             {
@@ -29,8 +27,6 @@ namespace ShareClassLibrary
             try
             {
                 return await client.GetStringAsync("Image/icon");
-
-                //return result;
             }
             catch(Exception ex)
             {
@@ -42,8 +38,28 @@ namespace ShareClassLibrary
             try
             {
                 return await client.GetFromJsonAsync<List<string>>("Image/teamimg");
-
-                //return result;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static async Task<List<string>> frcview(string language)
+        {
+            try
+            {
+                return await client.GetFromJsonAsync<List<string>>($"Image/frcview/{language}");
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static async Task<string> teamview(string language)
+        {
+            try
+            {
+                return await client.GetStringAsync($"Image/teamview/{language}");
             }
             catch
             {

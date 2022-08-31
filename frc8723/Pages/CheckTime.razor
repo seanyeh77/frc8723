@@ -9,7 +9,7 @@
 }
 else
 {
-    <MudTable Items="@userPrints" FixedHeader="@fixed_header" Filter="new Func<UserPoint,bool>(FilterFunc1)" Height="@(fixed_header || fixed_footer ?"400px":"")">
+    <MudTable Items="@userPrints"Filter="new Func<UserPoint,bool>(FilterFunc1)">
          <ToolBarContent>
             <MudSpacer />
             <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
@@ -25,8 +25,8 @@ else
             <MudTh><MudTableSortLabel SortBy="new Func<UserPoint, object>(x=>x.state)">狀態</MudTableSortLabel></MudTh>
         </HeaderContent>
         <RowTemplate>
-            <MudTd DataLabel="學號">@context.ID.ToString("D6")</MudTd>
-            <MudTd DataLabel="姓名">@context.Name</MudTd>
+            <MudTd DataLabel="學號">@context.ID</MudTd>
+            <MudTd DataLabel="姓名">@context.ChineseName</MudTd>
             <MudTd DataLabel="班級座號">@context.grade</MudTd>
             <MudTd DataLabel="總時間">@(Convert.ToInt32(context.totaleverydayminute))分鐘</MudTd>
             <MudTd DataLabel="上個月簽到天數">@(context.monaverage.ToString())天</MudTd>
@@ -35,7 +35,7 @@ else
             <MudTd DataLabel="狀態">@(context.state ? inroom : outroom)狀態</MudTd>
         </RowTemplate>
         <PagerContent>
-            <MudTablePager PageSizeOptions="new int[]{10, 20, 30,40,50}" />
+            <MudTablePager PageSizeOptions="new int[]{10,20,30,40,50}" />
         </PagerContent>
     </MudTable>
 }
@@ -44,8 +44,6 @@ else
     private string searchString1 = "";
     string inroom = "在教室";
     string outroom = "離開";
-    bool fixed_header = true;
-    bool fixed_footer = false;
     private List<UserData> userDatas = new List<UserData>();
     private IEnumerable<UserPoint> userPrints = new List<UserPoint>();
     public string menu9 = Data.Chinese_language.menu9;
@@ -60,7 +58,7 @@ else
     {
         if (string.IsNullOrWhiteSpace(searchString))
             return true;
-        if (userprint.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (userprint.ChineseName.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         if (userprint.ID.ToString().Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
@@ -72,12 +70,12 @@ else
     {
         if (Data.language == "english")
         {
-            menu9 = Data.Chinese_language.menu9;
+            menu9 = Data.English_language.menu9;
 
         }
         else
         {
-            menu9 = Data.English_language.menu9;
+            menu9 = Data.Chinese_language.menu9;
         }
     }
 }

@@ -1,20 +1,46 @@
 ﻿@page "/About_frc"
-
 <PageTitle>@menu3</PageTitle>
 <dev class="d-flex flex-column flex-column justify-center">
-    <img style="max-height: 500px;" src = "/images/FIRST_Vertical_RGB.jpg"/>
+    <MudImage ObjectPosition="ObjectPosition.Center" ObjectFit="ObjectFit.Cover" Height="null" Width="280" Src="http://www.era.org.tw/main/wp-content/uploads/2018/01/FIRST_Horz_RGB-1-1024x267.jpg" Alt="Mony the dog" Elevation="25" Class="rounded-lg" />
 </dev>
 <MudText Typo="Typo.h3" GutterBottom="true">@menu3</MudText>
-<MudText Typo = "Typo.h5">
-    @article3
-</MudText>
+@if (article1 != null)
+{
+    @foreach (string item in article1)
+    {
+        <MudText Typo="Typo.h5">
+            @item
+        </MudText>
+    }
+}
+else
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+<div class="d-flex flex-column flex-column justify-center" style="width: 100%; height: 100%;">
+    <style>
+        .embed-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+        }
 
+            .embed-container iframe, .embed-container object, .embed-container embed {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }</style><div class='embed-container'><iframe width='560' height='315' src='https://www.youtube.com/embed/LgniEjI9cCM' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe></div>
+</div>
 @code {
     public string menu3 = Data.Chinese_language.menu3;
-    public string article3 = Data.Chinese_language.article3;
-
+    public List<string> article1;
     protected override async Task OnInitializedAsync()
     {
+        article1 = await httpclientfacebook.frcview(Data.language);
         Data.page = "/About_frc";
         artical();
     }
@@ -22,14 +48,12 @@
     {
         if (Data.language == "english")
         {
-            menu3 = Data.Chinese_language.menu3;
-            article3 = Data.Chinese_language.article3;
+            menu3 = Data.English_language.menu3;
 
         }
         else
         {
-            menu3 = Data.English_language.menu3;
-            article3 = Data.English_language.article3;
+            menu3 = Data.Chinese_language.menu3;
         }
     }
 }
